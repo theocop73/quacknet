@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quack index{% endblock %}
+
+
+{% block body %}
+
+
+
+   {# <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody> #}
+        <div class="grid place-items-center">
+        {% for quack in quacks|reverse %}
+            {# <tr>
+                <td>{{ quack.id }}</td>
+                <td>{{ quack.content }}</td>
+                <td>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
+                    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
+                </td>
+            </tr> #}
+
+
+    <div class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 my-5 w-4/12">
+  {% if quack.author == app.user %}
+         <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_duck_profile') }}">
+         {% if quack.author.avatar %}
+        <img src="{{ '/uploads/avatars/' ~ quack.author.avatar.filename }}" alt="Avatar preview" style="max-width: 200px; max-height: 200px;"></a>
+        {% else %}
+        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_duck_profile') }}"> <p>avatar</p> </a>
+        {% endif %}
+   {% elseif quack.author.avatar %}
+           <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_duck_profile_user', {'id': quack.author.id}) }}">
+        <img src="{{ '/uploads/avatars/' ~ quack.author.avatar.filename }}" alt="Avatar preview" style="max-width: 200px; max-height: 200px;"></a>
+        
+        {% else %}
+          <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_duck_profile_user', {'id': quack.author.id}) }}"> <p>avatar</p> </a>
+    {% endif %}
+   
+    <a href="#">
+        <p class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{quack.author.duckname}} dit :</p>
+    </a>
+    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{quack.content}}</p>
+    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{quack.createdAt|date('d-m-Y')}}</p>
+
+     {% for comment in quack.comments %}
+        <div>
+            <p>{{ comment.content }}</p>
+            <small>Posted at {{ comment.createdAt|date('Y-m-d H:i:s') }}</small>
+            <small> By {{comment.author.duckname}}</small>
+        </div>
+        
+    {% endfor %}
+     <h3>Add a comment</h3>
+
+    {{ form_start(quack.form) }}
+
+    {{ form_row(quack.form.content) }}
+
+    <button type="submit">Comment</button>
+
+    {{ form_end(quack.form) }}
+
+    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
+     {% if is_granted('ROLE_USER') and quack.author == app.user %}
+     <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
+     <a class="font-medium text-red-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_delete', {'id': quack.id}) }}">delete</a>
+     {% endif %}
+</div>
+        {% else %}
+   
+                <p colspan="4">no records found</p>
+           
+        {% endfor %}
+        </div>
+        {# </tbody>
+    </table> #}
+
+{% endblock %}

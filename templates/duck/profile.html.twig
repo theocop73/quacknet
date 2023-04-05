@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Mon profil</h1>
+  <p>Bienvenue {{ user.duckname }}</p>
+  <p>Email : {{ user.email }}</p>
+
+  <h2>Modifier mon profil</h2>
+  {{ form_start(form) }}
+
+  {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.duckname) }}
+      {{ form_row(form.avatar) }}
+       {% if avatarUrl is not null %}
+        <img src="{{ avatarUrl }}" alt="Avatar preview" style="max-width: 200px; max-height: 200px;">
+    {% endif %}
+
+  <button type="submit" class="btn btn-primary">Modifier</button>
+  {{ form_end(form) }}
+{% endblock %}

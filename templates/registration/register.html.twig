@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    <section class="bg-gray-50 dark:bg-gray-900">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+
+    {{ form_start(registrationForm) }}
+        {# {{ form_row(registrationForm.email) }} #}
+                    <div>
+                      
+                      <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form_label(registrationForm.email) }}</div>
+                      <div class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{ form_widget(registrationForm.email) }}
+                      </div>
+                      
+                  </div>
+
+
+ <div>
+                      
+                      <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form_label(registrationForm.lastname) }}</div>
+                      <div class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{ form_widget(registrationForm.lastname) }}
+                      </div>
+                      
+                  </div>
+  
+
+         <div>
+                      
+                      <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form_label(registrationForm.firstname) }}</div>
+                      <div class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{ form_widget(registrationForm.firstname) }}
+                      </div>
+                      
+                  </div>
+
+       
+
+         <div>
+                      
+                      <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ form_label(registrationForm.duckname) }}</div>
+                      <div class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{ form_widget(registrationForm.duckname) }}
+                      </div>
+                      
+                  </div>
+
+            <div>
+                      
+                      <div class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> {{ form_label(registrationForm.plainPassword) }}</div>
+                      <div class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{ form_row(registrationForm.plainPassword) }}
+                      </div>
+                      
+                  </div>
+
+                  
+        {# {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }} #}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+    </div>
+    </section>
+{% endblock %}

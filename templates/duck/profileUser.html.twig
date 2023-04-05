@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1> profil de <b>{{ duck.firstname}} {{ duck.lastname}}</b></h1>
+  <p>username {{ duck.duckname }}</p>
+  <p>Email : {{ duck.email }}</p>
+   {% if duck.avatar  %}
+         <img src="{{ '/uploads/avatars/' ~ duck.avatar.filename }}" alt="Avatar preview" style="max-width: 200px; max-height: 200px;">
+    {% endif %}
+
+
+{% endblock %}

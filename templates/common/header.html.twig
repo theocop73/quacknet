@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+    <div class="grid place-items-center">
+<ul class="flex mb-10">
+  <li class="mr-6">
+    <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_quack_index') }}">Quacks</a>
+  </li>
+  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+   <li class="mr-6">
+    <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_logout') }}">Logout</a>
+  </li>
+  {% else %}
+  <li class="mr-6">
+    <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_login') }}">Login</a>
+  </li>
+ {% endif %}
+  <li class="mr-6">
+    <a class="text-blue-500 hover:text-blue-800" href="{{ path('app_register') }}">Register</a>
+  </li>
+</ul>
+</div>
+
