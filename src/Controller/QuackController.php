@@ -20,28 +20,62 @@ class QuackController extends AbstractController
     public function index(QuackRepository $quackRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         $quacks = $entityManager->getRepository(Quack::class)->findAll();
-        $user =  $this->getUser();
+        $user = $this->getUser();
+    
 
-        foreach ($quacks as $quack) {
-            $comment = new Comment();
-            $form = $this->createForm(CommentType::class, $comment);
-            $form->handleRequest($request);
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
     
-            if ($form->isSubmitted() && $form->isValid()) {
-                $comment->setQuack($quack);
-                $comment->setAuthor($user);
-                $entityManager->persist($comment);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
-            }
-    
-            $quack->form = $form->createView();
+        // Traitement de la soumission du formulaire de commentaire
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setAuthor($this->getUser()); 
+            $quackId = $request->request->get('quack_id');
+            $quack = $entityManager->getRepository(Quack::class)->find($quackId);
+            
+           
+            $comment->setQuack($quack);
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Comment added successfully!');
+            return $this->redirectToRoute('app_quack_index');
         }
+
+        foreach($quacks as $quack){
+            $quack->form  = $commentForm->createView();
+        }
+    
     
         return $this->render('quack/index.html.twig', [
             'quacks' => $quacks,
         ]);
+    }
+
+    #[Route('/comment/create', name: 'comment_create', methods: ['GET', 'POST'])]
+    public function createComment(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+    
+            $comment = $form->getData();
+            $quackId = $form->get('quack_id')->getData(); // Récupération de l'ID du Quack
+    
+            $quack = $entityManager->getRepository(Quack::class)->find($quackId); // Récupération du Quack depuis l'ID
+    
+            if (!$quack) {
+                throw $this->createNotFoundException('Aucun Quack trouvé pour cet ID : ' . $quackId);
+            }
+    
+            $comment->setQuack($quack); // Association du Quack au Comment
+    
+            $entityManager->persist($comment);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('quack_show', ['id' => $quackId]);
+        }
     }
 
     #[Route('/new', name: 'app_quack_new', methods: ['GET', 'POST'])]

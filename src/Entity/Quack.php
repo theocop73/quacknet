@@ -30,7 +30,7 @@ class Quack
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private array $tags = [];
 
-    #[ORM\OneToMany(mappedBy: 'quack', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'quack', targetEntity: Comment::class, cascade:["persist"]) ]
     private Collection $comments;
 
     public function __construct()

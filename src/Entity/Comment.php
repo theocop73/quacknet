@@ -15,7 +15,7 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity:"App\Entity\Quack", inversedBy:"comments")]
     private ?Quack $quack = null;
 
     #[ORM\ManyToOne]

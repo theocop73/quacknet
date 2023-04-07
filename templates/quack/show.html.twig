@@ -17,8 +17,6 @@
         <div>
             <p>{{ comment.content }}</p>
             <small>Posted at {{ comment.createdAt|date('Y-m-d H:i:s') }}</small>
-            <small> By {{comment.author.email}}</small>
-            
         </div>
     {% endfor %}
 

@@ -18,7 +18,7 @@
         </thead>
         <tbody> #}
         <div class="grid place-items-center">
-        {% for quack in quacks|reverse %}
+        {% for quack in quacks %}
             {# <tr>
                 <td>{{ quack.id }}</td>
                 <td>{{ quack.content }}</td>
@@ -45,7 +45,7 @@
         {% else %}
           <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_duck_profile_user', {'id': quack.author.id}) }}"> <p>avatar</p> </a>
     {% endif %}
-   
+   <p> QUACK ID NUMERO {{quack.id}}</p>
     <a href="#">
         <p class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{quack.author.duckname}} dit :</p>
     </a>
@@ -56,7 +56,7 @@
         <div>
             <p>{{ comment.content }}</p>
             <small>Posted at {{ comment.createdAt|date('Y-m-d H:i:s') }}</small>
-            <small> By {{comment.author.duckname}}</small>
+            
         </div>
         
     {% endfor %}
@@ -64,13 +64,14 @@
 
     {{ form_start(quack.form) }}
 
-    {{ form_row(quack.form.content) }}
+     {{ form_row(quack.form.content) }}
 
+      <input type="hidden" name="quack_id" value="{{ quack.id }}" />
     <button type="submit">Comment</button>
 
     {{ form_end(quack.form) }}
 
-    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
+    <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_show', {'id': quack.id}) }}">comment</a>
      {% if is_granted('ROLE_USER') and quack.author == app.user %}
      <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
      <a class="font-medium text-red-600 dark:text-blue-500 hover:underline" href="{{ path('app_quack_delete', {'id': quack.id}) }}">delete</a>
